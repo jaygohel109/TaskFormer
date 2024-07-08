@@ -14,7 +14,7 @@ class PastPortApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
       ),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
