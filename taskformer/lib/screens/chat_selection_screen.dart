@@ -16,11 +16,41 @@ class HistoricalChatApp extends StatelessWidget {
   }
 }
 
-class ChatSelectionScreen extends StatelessWidget {
+class ChatSelectionScreen extends StatefulWidget {
   const ChatSelectionScreen({Key? key}) : super(key: key);
 
   @override
+  _ChatSelectionScreenState createState() => _ChatSelectionScreenState();
+}
+
+class _ChatSelectionScreenState extends State<ChatSelectionScreen> {
+  final PageController _pageController = PageController(viewportFraction: 0.7);
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController.addListener(() {
+      setState(() {
+        _currentPage = _pageController.page?.round() ?? 0;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final List<Map<String, String>> persons = [
+      {'name': 'Napoleon Bonaparte', 'image': 'assets/images/Emperor-Napoleon.png'},
+      {'name': 'Marie Curie', 'image': 'assets/images/marie_curie.jpg'},
+      {'name': 'Thomas Edison', 'image': 'assets/images/Thomas_Edison.png'},
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Historical Chat'),
@@ -37,18 +67,33 @@ class ChatSelectionScreen extends StatelessWidget {
             const SizedBox(height: 20),
             SizedBox(
               height: 300,
-              child: PageView(
-                children: [
-                  _buildChatCard(context, 'Napoleon Bonaparte', 'assets/images/Emperor-Napoleon.png'),
-                  _buildChatCard(context, 'Marie Curie', 'assets/images/marie_curie.jpg'),
-                  _buildChatCard(context, 'Thomas Edison', 'assets/images/Thomas_Edison.png'),
-                ],
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: persons.length,
+                itemBuilder: (context, index) {
+                  final scale = _currentPage == index ? 1.0 : 0.8;
+                  return _buildChatCard(
+                    context,
+                    persons[index]['name']!,
+                    persons[index]['image']!,
+                    scale,
+                  );
+                },
               ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Handle the chat selection
+                final selectedPerson = persons[_currentPage];
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatScreen(
+                      personName: selectedPerson['name']!,
+                      personImage: selectedPerson['image']!,
+                    ),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.yellow,
@@ -62,16 +107,9 @@ class ChatSelectionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildChatCard(BuildContext context, String name, String imageUrl) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChatScreen(personName: name, personImage: imageUrl),
-          ),
-        );
-      },
+  Widget _buildChatCard(BuildContext context, String name, String imageUrl, double scale) {
+    return Transform.scale(
+      scale: scale,
       child: Column(
         children: [
           Image.asset(imageUrl, height: 200),

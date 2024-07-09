@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taskformer/screens/ChatScreen.dart';
 import 'package:taskformer/screens/ExploreScreen.dart';
 import 'package:taskformer/screens/TrandingScreen.dart';
+import 'package:taskformer/screens/chat_selection_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -138,22 +139,10 @@ class HomePageState extends State<HomePage> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Colors.black),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.explore),
-                label: 'Explore',
-                backgroundColor: Colors.black),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.chat),
-                label: 'Chat',
-                backgroundColor: Colors.black),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Profile',
-                backgroundColor: Colors.black),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
+            BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
           currentIndex: _currentIndex,
           backgroundColor: Colors.black,
@@ -163,6 +152,12 @@ class HomePageState extends State<HomePage> {
             setState(() {
               _currentIndex = index;
             });
+            if (index == 2) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ChatSelectionScreen()),
+              );
+            }
           },
         ),
       ),
