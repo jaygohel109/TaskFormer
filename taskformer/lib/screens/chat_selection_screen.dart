@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:taskformer/screens/HomeScreen.dart';
 import 'openai_service.dart';
+import 'package:taskformer/screens/HomeScreen.dart';
+import 'package:taskformer/screens/ExploreScreen.dart';
+import 'package:taskformer/screens/chat_selection_screen.dart';
+import 'package:taskformer/screens/ProfileScreen.dart';
 
 void main() => runApp(HistoricalChatApp());
 
@@ -16,41 +21,11 @@ class HistoricalChatApp extends StatelessWidget {
   }
 }
 
-class ChatSelectionScreen extends StatefulWidget {
+class ChatSelectionScreen extends StatelessWidget {
   const ChatSelectionScreen({Key? key}) : super(key: key);
 
   @override
-  _ChatSelectionScreenState createState() => _ChatSelectionScreenState();
-}
-
-class _ChatSelectionScreenState extends State<ChatSelectionScreen> {
-  final PageController _pageController = PageController(viewportFraction: 0.7);
-  int _currentPage = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController.addListener(() {
-      setState(() {
-        _currentPage = _pageController.page?.round() ?? 0;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> persons = [
-      {'name': 'Napoleon Bonaparte', 'image': 'assets/images/Emperor-Napoleon.png'},
-      {'name': 'Marie Curie', 'image': 'assets/images/marie_curie.jpg'},
-      {'name': 'Thomas Edison', 'image': 'assets/images/Thomas_Edison.png'},
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Historical Chat'),
@@ -67,33 +42,18 @@ class _ChatSelectionScreenState extends State<ChatSelectionScreen> {
             const SizedBox(height: 20),
             SizedBox(
               height: 300,
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: persons.length,
-                itemBuilder: (context, index) {
-                  final scale = _currentPage == index ? 1.0 : 0.8;
-                  return _buildChatCard(
-                    context,
-                    persons[index]['name']!,
-                    persons[index]['image']!,
-                    scale,
-                  );
-                },
+              child: PageView(
+                children: [
+                  _buildChatCard(context, 'Napoleon Bonaparte', 'assets/images/Emperor-Napoleon.png'),
+                  _buildChatCard(context, 'Marie Curie', 'assets/images/marie_curie.jpg'),
+                  _buildChatCard(context, 'Thomas Edison', 'assets/images/Thomas_Edison.png'),
+                ],
               ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                final selectedPerson = persons[_currentPage];
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ChatScreen(
-                      personName: selectedPerson['name']!,
-                      personImage: selectedPerson['image']!,
-                    ),
-                  ),
-                );
+                // Handle the chat selection
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.yellow,
@@ -104,12 +64,59 @@ class _ChatSelectionScreenState extends State<ChatSelectionScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+        currentIndex: 2,
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.yellow,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
+              break;
+            case 1:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
+              break;
+            case 2:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ChatSelectionScreen()),
+              );
+              break;
+            case 3:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+              );
+              break;
+          }
+        },
+      ),
     );
   }
 
-  Widget _buildChatCard(BuildContext context, String name, String imageUrl, double scale) {
-    return Transform.scale(
-      scale: scale,
+  Widget _buildChatCard(BuildContext context, String name, String imageUrl) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatScreen(personName: name, personImage: imageUrl),
+          ),
+        );
+      },
       child: Column(
         children: [
           Image.asset(imageUrl, height: 200),
@@ -262,6 +269,46 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+        currentIndex: 2,
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.yellow,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
+              break;
+            case 1:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
+              break;
+            case 2:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ChatSelectionScreen()),
+              );
+              break;
+            case 3:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+              );
+              break;
+          }
+        },
       ),
     );
   }
