@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._();
@@ -51,8 +52,22 @@ class DatabaseHelper {
     );
 
     if (maps.isNotEmpty) {
+      // Save the username to shared preferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('username', username);
+
       return maps.first;
     }
     return null;
+  }
+
+  Future<String?> getCurrentUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('username');
+  }
+
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('username');
   }
 }

@@ -4,7 +4,11 @@ class ChatCard extends StatelessWidget {
   final String name;
   final String imageUrl;
 
-  const ChatCard({super.key, required this.name, required this.imageUrl});
+  const ChatCard({
+    Key? key,
+    required this.name,
+    required this.imageUrl,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,11 @@ class ExploreCard extends StatelessWidget {
   final String title;
   final String imageUrl;
 
-  const ExploreCard({super.key, required this.title, required this.imageUrl});
+  const ExploreCard({
+    Key? key,
+    required this.title,
+    required this.imageUrl,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,6 @@ class ExploreCard extends StatelessWidget {
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            // backgroundColor: Colors.black45,
           ),
         ),
       ),

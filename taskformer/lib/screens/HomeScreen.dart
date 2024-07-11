@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:taskformer/screens/ChatScreen.dart';
-import 'package:taskformer/screens/ExploreScreen.dart';
-import 'package:taskformer/screens/TrandingScreen.dart';
-import 'package:taskformer/screens/chat_selection_screen.dart';
+import 'package:taskformer/screens/explore_screen.dart'; // Ensure ExploreScreen is imported
+import 'package:taskformer/screens/chat_selection_screen.dart'; // Ensure ChatSelectionScreen is imported
+import 'package:taskformer/widgets/custom_bottom_navigation_bar.dart';
+import 'package:taskformer/widgets/trending_card.dart';
+import 'package:taskformer/widgets/explore_card.dart';
+import 'package:taskformer/widgets/chat_card.dart';
+import 'package:taskformer/screens/profile_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,7 +15,36 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  int _currentIndex = 0; // Track the current index for BottomNavigationBar
+  int _currentIndex = 0;
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+    switch (index) {
+      case 0:
+        // Stay on the current screen
+        break;
+      case 1:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const ExploreScreen()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ChatSelectionScreen()),
+        );
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ProfileScreen()),
+        );
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +52,7 @@ class HomePageState extends State<HomePage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const Text('PASTPORT'),
           centerTitle: false,
           backgroundColor: Colors.black,
@@ -137,28 +170,9 @@ class HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
-            BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          ],
+        bottomNavigationBar: CustomBottomNavigationBar(
           currentIndex: _currentIndex,
-          backgroundColor: Colors.black,
-          selectedItemColor: Colors.yellow,
-          unselectedItemColor: Colors.grey,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-            if (index == 2) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ChatSelectionScreen()),
-              );
-            }
-          },
+          onTap: _onTabTapped,
         ),
       ),
     );
