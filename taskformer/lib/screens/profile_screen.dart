@@ -5,6 +5,7 @@ import 'package:taskformer/screens/explore_screen.dart';
 import 'package:taskformer/screens/chat_selection_screen.dart';
 import 'package:taskformer/screens/login_screen.dart';
 import 'package:taskformer/Database/database_helper.dart';
+import 'package:taskformer/screens/edit_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -106,8 +107,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-            ProfileMenuItem(
-                icon: Icons.person, text: 'Edit Profile', onTap: () {}),
+           ProfileMenuItem(
+            icon: Icons.person,
+            text: 'Edit Profile',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EditProfileScreen()),
+              );
+            },
+          ),
             ProfileMenuItem(icon: Icons.book, text: 'Notebook', onTap: () {}),
             ProfileMenuItem(
               icon: Icons.notifications,
