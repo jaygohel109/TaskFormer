@@ -51,6 +51,11 @@ class _ChatScreenState extends State<ChatScreen> {
         });
         await DatabaseHelper().saveMessage(userId, message, 'user', widget.personName);
         await DatabaseHelper().saveMessage(userId, response, widget.personName, widget.personName);
+
+        // Generate and save notes
+        final notes = await openAIService.generateNotes(_messages);
+        print('Generated notes: $notes');
+        await DatabaseHelper().saveNotes(userId, widget.personName, notes);
       } catch (error) {
         _showError('Connection failed: $error');
       }

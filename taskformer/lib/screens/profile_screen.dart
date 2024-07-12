@@ -6,6 +6,7 @@ import 'package:taskformer/screens/chat_selection_screen.dart';
 import 'package:taskformer/screens/login_screen.dart';
 import 'package:taskformer/Database/database_helper.dart';
 import 'package:taskformer/screens/edit_profile_screen.dart';
+import 'package:taskformer/screens/notebook_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -85,8 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Colors.black,
       ),
       body: Padding(
-        padding: const EdgeInsets.only(
-            top: 20.0), // Adjust this value to control the space
+        padding: const EdgeInsets.only(top: 20.0), // Adjust this value to control the space
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -108,17 +108,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
+           ProfileMenuItem(
+            icon: Icons.person,
+            text: 'Edit Profile',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EditProfileScreen()),
+              );
+            },
+          ),
             ProfileMenuItem(
-              icon: Icons.person,
-              text: 'Edit Profile',
+              icon: Icons.book, 
+              text: 'Notebook', 
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EditProfileScreen()),
+                  MaterialPageRoute(builder: (context) => NotebookScreen()),
                 );
-              },
+              }
             ),
-            ProfileMenuItem(icon: Icons.book, text: 'Notebook', onTap: () {}),
             ProfileMenuItem(
               icon: Icons.notifications,
               text: 'Notifications',

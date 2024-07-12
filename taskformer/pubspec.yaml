@@ -82,7 +82,7 @@ flutter:
     - assets/images/time-period.jpeg
     - assets/images/Emperor-Napoleon.png
     - assets/images/Thomas_Edison.png
-    - assets/images/marie_curie.jpg
+    - assets/images/marie_curie.png
     - assets/images/Login.jpg
     - assets/images/Register.jpg
     - assets/images/moon_landing.jpg
@@ -97,7 +97,22 @@ flutter:
     - assets/images/revolutions.jpg
     - assets/images/voyages.jpg
     - assets/images/space_exploration.jpg
-
+    - assets/images/mahatma_gandhi.png
+    - assets/images/cleopatra.png
+    - assets/images/abraham_lincoln.png
+    - assets/images/leonardo_da_vinci.png
+    - assets/images/nelson_mandela.png
+    - assets/images/william_shakespeare.png
+    - assets/images/martin_luther_king_jr.png
+    - assets/images/amelia_earhart.png
+    - assets/images/isaac_newton.png
+    - assets/images/queen_victoria.png
+    - assets/images/george_washington.png
+    - assets/images/alexander_the_great.png
+    - assets/images/florence_nightingale.png
+    - assets/images/socrates.png
+    - assets/images/susan_b_anthony.png
+    - assets/images/rosa_parks.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

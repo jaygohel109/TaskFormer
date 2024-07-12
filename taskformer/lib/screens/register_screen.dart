@@ -82,7 +82,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -92,15 +92,15 @@ class RegisterScreenState extends State<RegisterScreen> {
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           labelText: 'Username',
-                          labelStyle: TextStyle(color: Colors.black),
+                          labelStyle: TextStyle(color: Colors.white),
                           border: OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.black54, width: 2.0),
+                                BorderSide(color: Colors.yellow),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.black54, width: 1.0),
+                                BorderSide(color: Colors.white),
                           ),
                           prefixIconColor: Colors.black,
                         ),
@@ -110,7 +110,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Text(
                             _usernameError!,
-                            style: const TextStyle(color: Colors.red),
+                            style: const TextStyle(color: Colors.yellow),
                           ),
                         ),
                       const SizedBox(height: 20),
@@ -121,16 +121,16 @@ class RegisterScreenState extends State<RegisterScreen> {
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.lock),
                           labelText: 'Password',
-                          labelStyle: TextStyle(color: Colors.black),
+                          labelStyle: TextStyle(color: Colors.white),
                           border: OutlineInputBorder(),
                           prefixIconColor: Colors.black,
                           focusedBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.black54, width: 2.0),
+                                BorderSide(color: Colors.yellow),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.black54, width: 1.0),
+                                BorderSide(color: Colors.white),
                           ),
                         ),
                       ),
@@ -139,7 +139,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Text(
                             _passwordError!,
-                            style: const TextStyle(color: Colors.red),
+                            style: const TextStyle(color: Colors.yellow),
                           ),
                         ),
                       const SizedBox(height: 20),
@@ -156,6 +156,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                           'Register',
                           style: TextStyle(
                             fontSize: 16, // Set the font size
+                            color: Colors.yellow, // Set the text color to black
                           ),
                         ),
                       ),

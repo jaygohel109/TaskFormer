@@ -24,9 +24,9 @@ class DatabaseHelper {
 
     return openDatabase(
       path,
-      version: 3, // Increment the version number
+      version: 4, // Increment the version number
       onCreate: _onCreate,
-      onUpgrade: _onUpgrade, // Add this line
+      onUpgrade: _onUpgrade,
     );
   }
 
@@ -49,10 +49,53 @@ class DatabaseHelper {
       FOREIGN KEY (user_id) REFERENCES users (id)
     )
     ''');
+    await db.execute('''
+    CREATE TABLE notes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      historical_leader TEXT NOT NULL,
+      note TEXT NOT NULL,
+      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users (id)
+    )
+    ''');
   }
 
   Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 3) {
+      await _createMessagesTableIfNotExists(db);
+    }
+    if (oldVersion < 4) {
+      await db.execute('''
+      CREATE TABLE IF NOT EXISTS notes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        historical_leader TEXT NOT NULL,
+        note TEXT NOT NULL,
+        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users (id)
+      )
+      ''');
+    }
+  }
+
+  Future<void> _createMessagesTableIfNotExists(Database db) async {
+    final tableExists = await db.rawQuery('''
+      SELECT name FROM sqlite_master WHERE type='table' AND name='messages'
+    ''');
+    if (tableExists.isEmpty) {
+      await db.execute('''
+      CREATE TABLE messages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        message TEXT NOT NULL,
+        sender TEXT NOT NULL,
+        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+        historical_leader TEXT NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users (id)
+      )
+      ''');
+    } else {
       await db.execute('''
       ALTER TABLE messages ADD COLUMN historical_leader TEXT NOT NULL DEFAULT 'Unknown'
       ''');
@@ -117,5 +160,36 @@ class DatabaseHelper {
       whereArgs: [userId, historicalLeader],
       orderBy: 'timestamp ASC'
     );
+  }
+
+  Future<void> saveNotes(int userId, String historicalLeader, String note) async {
+    final db = await database;
+    print('Saving note for $historicalLeader: $note');
+    await db.insert('notes', {
+      'user_id': userId,
+      'historical_leader': historicalLeader,
+      'note': note,
+      'timestamp': DateTime.now().toIso8601String(),
+    });
+    print('Note saved');
+  }
+
+  Future<List<Map<String, dynamic>>> getNotes(int userId, String historicalLeader) async {
+    final db = await database;
+    return await db.query(
+      'notes',
+      where: 'user_id = ? AND historical_leader = ?',
+      whereArgs: [userId, historicalLeader],
+      orderBy: 'timestamp ASC'
+    );
+  }
+
+  Future<List<String>> getDistinctHistoricalLeaders(int userId) async {
+    final db = await database;
+    final List<Map<String, dynamic>> result = await db.rawQuery(
+      'SELECT DISTINCT historical_leader FROM messages WHERE user_id = ?',
+      [userId]
+    );
+    return result.map((e) => e['historical_leader'] as String).toList();
   }
 }
