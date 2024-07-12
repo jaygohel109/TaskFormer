@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:taskformer/screens/HomeScreen.dart';
+import 'package:taskformer/screens/home_screen.dart';
 import 'package:taskformer/screens/register_screen.dart';
 import 'package:taskformer/database/database_helper.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final DatabaseHelper _dbHelper = DatabaseHelper();
@@ -17,8 +19,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _login() async {
     setState(() {
-      _usernameError = _usernameController.text.isEmpty ? 'Please enter a username' : null;
-      _passwordError = _passwordController.text.isEmpty ? 'Please enter a password' : null;
+      _usernameError =
+          _usernameController.text.isEmpty ? 'Please enter a username' : null;
+      _passwordError =
+          _passwordController.text.isEmpty ? 'Please enter a password' : null;
     });
 
     if (_usernameError == null && _passwordError == null) {
@@ -29,11 +33,11 @@ class _LoginScreenState extends State<LoginScreen> {
       if (user != null) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => const HomePage()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Invalid username or password')),
+          const SnackBar(content: Text('Invalid username or password')),
         );
       }
     }
@@ -43,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -60,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 colors: [Colors.black.withOpacity(0.5), Colors.transparent],
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
-                stops: [0.0, 0.7],
+                stops: const [0.0, 0.7],
               ),
             ),
           ),
@@ -77,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      const Text(
                         'Welcome Back!',
                         style: TextStyle(
                           fontSize: 24,
@@ -85,14 +89,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextField(
                         controller: _usernameController,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.person),
+                          prefixIcon:
+                              const Icon(Icons.person, color: Colors.yellow),
                           labelText: 'Username',
-                          labelStyle: TextStyle(color: Colors.white),
-                          border: OutlineInputBorder(),
+                          labelStyle: const TextStyle(color: Colors.white),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.yellow),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.yellow),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
                       ),
                       if (_usernameError != null)
@@ -100,18 +112,28 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Text(
                             _usernameError!,
-                            style: TextStyle(color: Colors.red),
+                            style: const TextStyle(
+                              color: Colors.yellow,
+                            ),
                           ),
                         ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextField(
                         controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.lock),
+                          prefixIcon:
+                              const Icon(Icons.lock, color: Colors.yellow),
                           labelText: 'Password',
-                          labelStyle: TextStyle(color: Colors.white),
-                          border: OutlineInputBorder(),
+                          labelStyle: const TextStyle(color: Colors.white),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.yellow),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.yellow),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
                       ),
                       if (_passwordError != null)
@@ -119,36 +141,46 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Text(
                             _passwordError!,
-                            style: TextStyle(color: Colors.red),
+                            style: const TextStyle(
+                              color: Colors.yellow,
+                            ),
                           ),
                         ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: _login,
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                          // backgroundColor: Colors
+                          //     .yellow, // Set the background color to yellow
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Login',
                           style: TextStyle(
                             fontSize: 16, // Set the font size
+                            color: Colors.yellow, // Set the text color to black
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => RegisterScreen()),
+                            MaterialPageRoute(
+                                builder: (context) => RegisterScreen()),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           'Register',
-                          style: TextStyle(color: Colors.white, fontSize: 16, decoration: TextDecoration.underline),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              decoration: TextDecoration.underline),
                         ),
                       ),
                     ],

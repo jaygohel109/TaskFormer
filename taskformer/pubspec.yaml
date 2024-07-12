@@ -85,6 +85,18 @@ flutter:
     - assets/images/marie_curie.jpg
     - assets/images/Login.jpg
     - assets/images/Register.jpg
+    - assets/images/moon_landing.jpg
+    - assets/images/napoleon.jpeg
+    - assets/images/medieval.jpg
+    - assets/images/renaissance.jpg
+    - assets/images/ancient.jpeg
+    - assets/images/asian_history.jpg
+    - assets/images/african_history.jpg
+    - assets/images/wars.jpg
+    - assets/images/civil_rights.png
+    - assets/images/revolutions.jpg
+    - assets/images/voyages.jpg
+    - assets/images/space_exploration.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

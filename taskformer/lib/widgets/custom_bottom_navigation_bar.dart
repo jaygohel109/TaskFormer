@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taskformer/screens/HomeScreen.dart';
+import 'package:taskformer/screens/home_screen.dart';
 import 'package:taskformer/screens/explore_screen.dart';
 import 'package:taskformer/screens/chat_selection_screen.dart';
 import 'package:taskformer/screens/profile_screen.dart';
@@ -8,10 +8,13 @@ class CustomBottomNavigationBar extends StatefulWidget {
   final int currentIndex;
   final Function(int) onTap;
 
-  const CustomBottomNavigationBar({Key? key, required this.currentIndex, required this.onTap}) : super(key: key);
+  const CustomBottomNavigationBar(
+      {Key? key, required this.currentIndex, required this.onTap})
+      : super(key: key);
 
   @override
-  _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState();
+  _CustomBottomNavigationBarState createState() =>
+      _CustomBottomNavigationBarState();
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {

@@ -3,11 +3,13 @@ import 'package:taskformer/screens/login_screen.dart';
 import 'package:taskformer/database/database_helper.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  RegisterScreenState createState() => RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final DatabaseHelper _dbHelper = DatabaseHelper();
@@ -28,11 +30,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       await _dbHelper.registerUser(username, password);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('User registered successfully')),
+        const SnackBar(content: Text('User registered successfully')),
       );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     }
   }
@@ -41,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register'),
+        title: const Text('Register'),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -58,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 colors: [Colors.black.withOpacity(0.6), Colors.transparent],
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
-                stops: [0.0, 0.7],
+                stops: const [0.0, 0.7],
               ),
             ),
           ),
@@ -75,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      const Text(
                         'Create Account',
                         style: TextStyle(
                           fontSize: 24,
@@ -83,20 +85,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextField(
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                         controller: _usernameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           labelText: 'Username',
                           labelStyle: TextStyle(color: Colors.black),
                           border: OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black54, width: 2.0),
+                            borderSide:
+                                BorderSide(color: Colors.black54, width: 2.0),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black54, width: 1.0),
+                            borderSide:
+                                BorderSide(color: Colors.black54, width: 1.0),
                           ),
                           prefixIconColor: Colors.black,
                         ),
@@ -106,25 +110,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Text(
                             _usernameError!,
-                            style: TextStyle(color: Colors.red),
+                            style: const TextStyle(color: Colors.red),
                           ),
                         ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextField(
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                         controller: _passwordController,
                         obscureText: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.lock),
                           labelText: 'Password',
                           labelStyle: TextStyle(color: Colors.black),
                           border: OutlineInputBorder(),
                           prefixIconColor: Colors.black,
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black54, width: 2.0),
+                            borderSide:
+                                BorderSide(color: Colors.black54, width: 2.0),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black54, width: 1.0),
+                            borderSide:
+                                BorderSide(color: Colors.black54, width: 1.0),
                           ),
                         ),
                       ),
@@ -133,38 +139,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Text(
                             _passwordError!,
-                            style: TextStyle(color: Colors.red),
+                            style: const TextStyle(color: Colors.red),
                           ),
                         ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: _register,
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 30, vertical: 15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Register',
                           style: TextStyle(
                             fontSize: 16, // Set the font size
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       TextButton(
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginScreen()),
+                                builder: (context) => const LoginScreen()),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           'Login',
-                          style: TextStyle(color: Colors.black, fontSize: 16, decoration: TextDecoration.underline, decorationColor: Colors.black),
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.black),
                         ),
                       ),
                     ],

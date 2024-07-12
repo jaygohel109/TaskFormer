@@ -45,7 +45,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       await _dbHelper.logout();
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()), // Remove const here
+        MaterialPageRoute(
+            builder: (context) => LoginScreen()), // Remove const here
         (Route<dynamic> route) => false, // This line clears the back stack
       );
     } else {
@@ -86,7 +87,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   labelText: 'Username',
                   labelStyle: TextStyle(color: Colors.yellow),
                   filled: true,
-                  fillColor: Colors.grey[900], // Dark grey background for the text field
+                  fillColor: Colors
+                      .grey[900], // Dark grey background for the text field
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(color: Colors.yellow),
@@ -102,7 +104,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   labelText: 'Password',
                   labelStyle: TextStyle(color: Colors.yellow),
                   filled: true,
-                  fillColor: Colors.grey[900], // Dark grey background for the text field
+                  fillColor: Colors
+                      .grey[900], // Dark grey background for the text field
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(color: Colors.yellow),

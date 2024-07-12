@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taskformer/screens/HomeScreen.dart'; // Ensure HomePage is imported
+import 'package:taskformer/screens/home_screen.dart'; // Ensure HomePage is imported
 import 'package:taskformer/screens/explore_screen.dart'; // Ensure ExploreScreen is imported
 import 'package:taskformer/screens/profile_screen.dart';
 import 'package:taskformer/widgets/custom_bottom_navigation_bar.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:taskformer/screens/HomeScreen.dart';
 import 'package:taskformer/screens/login_screen.dart';
 
 void main() {
@@ -15,7 +14,7 @@ class PastPortApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
       ),
-      home: LoginScreen(), // Start with the LoginScreen
+      home: const LoginScreen(), // Start with the LoginScreen
     );
   }
 }
