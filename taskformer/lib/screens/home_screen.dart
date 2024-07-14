@@ -6,6 +6,7 @@ import 'package:taskformer/widgets/trending_card.dart';
 import 'package:taskformer/widgets/explore_card.dart';
 import 'package:taskformer/widgets/chat_card.dart';
 import 'package:taskformer/screens/profile_screen.dart';
+import 'package:taskformer/widgets/chatbot_popup.dart'; // Ensure ChatbotPopup is imported
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -46,6 +47,13 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+  void _showChatbotPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => const ChatbotPopup(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -53,7 +61,14 @@ class HomePageState extends State<HomePage> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text('PASTPORT'),
+          title: Row(
+            children: [
+              Image.asset(
+                'assets/images/logo_yellow.png', // Make sure to update the path as per your asset location
+                height: 60, // Adjust the height as needed
+              ),
+            ],
+          ),
           centerTitle: false,
           backgroundColor: Colors.black,
           actions: [
@@ -64,6 +79,10 @@ class HomePageState extends State<HomePage> {
             IconButton(
               icon: const Icon(Icons.notifications),
               onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.chat),
+              onPressed: _showChatbotPopup,
             ),
           ],
           bottom: const TabBar(
