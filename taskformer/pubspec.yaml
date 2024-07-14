@@ -113,6 +113,9 @@ flutter:
     - assets/images/socrates.png
     - assets/images/susan_b_anthony.png
     - assets/images/rosa_parks.png
+    - assets/images/logo_yellow.png
+    - assets/images/logo_pastport.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
