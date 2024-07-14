@@ -76,124 +76,140 @@ class HomePageState extends State<HomePage> {
               onPressed: () {},
             ),
           ],
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: 'Trending'),
-              Tab(text: 'Explore'),
-              Tab(text: 'Historical Chat'),
-            ],
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.grey,
-            indicatorColor: Colors.yellow,
-          ),
         ),
-        body: TabBarView(
-          children: [
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Trending',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 200,
+                  child: PageView(
+                    children: const [
+                      TrendingCard(
+                        title: "Edison's Lightbulb Revolution",
+                        subtitle: "Discovery",
+                        imageUrl: 'assets/images/edison-light-bulb.jpg',
+                      ),
+                      TrendingCard(
+                        title: "Leonardo's Masterpiece",
+                        subtitle: "Culture",
+                        imageUrl: 'assets/images/leonardo.jpeg',
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Explore',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                GridView.count(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
                   children: [
-                    const Text(
-                      'Trending',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      height: 200,
-                      child: PageView(
-                        children: const [
-                          TrendingCard(
-                            title: "Edison's Lightbulb Revolution",
-                            subtitle: "Discovery",
-                            imageUrl: 'assets/images/edison-light-bulb.jpg',
+                    ExploreCard(
+                      title: "Time Periods",
+                      imageUrl: 'assets/images/time-period.jpeg',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ExploreScreen(section: 'Time Periods'),
                           ),
-                          TrendingCard(
-                            title: "Leonardo's Masterpiece",
-                            subtitle: "Culture",
-                            imageUrl: 'assets/images/leonardo.jpeg',
+                        );
+                      },
+                    ),
+                    ExploreCard(
+                      title: "Geographical Regions",
+                      imageUrl: 'assets/images/geographical-event-image.png',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ExploreScreen(section: 'Geographical Regions'),
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Explore',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 10),
-                    GridView.count(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      children: const [
-                        ExploreCard(
-                            title: "Time Periods",
-                            imageUrl: 'assets/images/time-period.jpeg'),
-                        ExploreCard(
-                            title: "Geographical Regions",
-                            imageUrl: 'assets/images/geographical-event-image.png'),
-                        ExploreCard(
-                            title: "Events",
-                            imageUrl: 'assets/images/image copy.png'),
-                        ExploreCard(
-                            title: "Discovery",
-                            imageUrl: 'assets/images/image.png'),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Historical Chat',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 10),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          ...persons.map((person) {
-                            return ChatCard(
-                              name: person['name']!,
-                              imageUrl: person['image']!,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ChatScreen(
-                                      personName: person['name']!,
-                                      personImage: person['image']!,
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          }).toList(),
-                          IconButton(
-                            icon: const Icon(Icons.arrow_forward, color: Colors.yellow),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const ChatSelectionScreen()),
-                              );
-                            },
+                    ExploreCard(
+                      title: "Events",
+                      imageUrl: 'assets/images/image copy.png',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ExploreScreen(section: 'Event and Movements'),
                           ),
-                        ],
-                      ),
+                        );
+                      },
+                    ),
+                    ExploreCard(
+                      title: "Discovery",
+                      imageUrl: 'assets/images/image.png',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ExploreScreen(section: 'Exploration and Discovery'),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
-              ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Historical Chat',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      ...persons.map((person) {
+                        return ChatCard(
+                          name: person['name']!,
+                          imageUrl: person['image']!,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChatScreen(
+                                  personName: person['name']!,
+                                  personImage: person['image']!,
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_forward, color: Colors.yellow),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const ChatSelectionScreen()),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Container(
-              child: const Center(child: Text('Explore Page Content')),
-            ),
-            Container(
-              child: const Center(child: Text('Historical Chat Page Content')),
-            ),
-          ],
+          ),
         ),
         bottomNavigationBar: CustomBottomNavigationBar(
           currentIndex: _currentIndex,

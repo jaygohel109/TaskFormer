@@ -4,30 +4,37 @@ import 'package:taskformer/widgets/detailed_view_screen.dart';
 class ExploreCard extends StatelessWidget {
   final String title;
   final String imageUrl;
+  final VoidCallback? onTap;
 
   const ExploreCard({
     Key? key,
     required this.title,
     required this.imageUrl,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: AssetImage(imageUrl),
-          fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 200, // Set width to match the Home screen card size
+        height: 200, // Set height to match the Home screen card size
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: AssetImage(imageUrl),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: Center(
-        child: Text(
-          title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+        child: Center(
+          child: Text(
+            title,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
@@ -65,8 +72,8 @@ class ExploreCard2 extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(right: 10.0),
         child: Container(
-          width: 150,
-          height: 100,
+          width: 200, // Set width to match the Home screen card size
+          height: 200, // Set height to match the Home screen card size
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
