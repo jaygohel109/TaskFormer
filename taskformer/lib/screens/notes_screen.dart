@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskformer/Database/database_helper.dart';
+import 'package:intl/intl.dart';
 
 class NotesScreen extends StatefulWidget {
   final String historicalLeader;
@@ -11,7 +12,7 @@ class NotesScreen extends StatefulWidget {
 }
 
 class _NotesScreenState extends State<NotesScreen> {
-  final List<Map<String, dynamic>> _notes = [];
+  final List<Map<String, dynamic>> _dailyNotes = [];
 
   @override
   void initState() {
@@ -23,8 +24,26 @@ class _NotesScreenState extends State<NotesScreen> {
     final userId = await DatabaseHelper().getCurrentUserId();
     if (userId != null) {
       final notes = await DatabaseHelper().getNotes(userId, widget.historicalLeader);
+      final Map<String, String> aggregatedNotes = {};
+
+      for (var note in notes) {
+        String date = DateFormat('yyyy-MM-dd').format(DateTime.parse(note['timestamp'] as String));
+        String noteText = note['note'] as String;
+
+        if (aggregatedNotes.containsKey(date)) {
+          aggregatedNotes[date] = '${aggregatedNotes[date]}\n$noteText';
+        } else {
+          aggregatedNotes[date] = noteText;
+        }
+      }
+
       setState(() {
-        _notes.addAll(notes);
+        aggregatedNotes.forEach((date, summary) {
+          _dailyNotes.add({
+            'date': date,
+            'summary': summary,
+          });
+        });
       });
     }
   }
@@ -41,9 +60,9 @@ class _NotesScreenState extends State<NotesScreen> {
           color: Colors.black,
           child: ListView.builder(
             padding: const EdgeInsets.all(16),
-            itemCount: _notes.length,
+            itemCount: _dailyNotes.length,
             itemBuilder: (context, index) {
-              final note = _notes[index];
+              final note = _dailyNotes[index];
               return Card(
                 color: Colors.grey[850],
                 child: Padding(
@@ -52,13 +71,13 @@ class _NotesScreenState extends State<NotesScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        note['note'] as String,
-                        style: const TextStyle(color: Colors.white, fontSize: 16),
+                        note['date'] as String,
+                        style: const TextStyle(color: Colors.yellow, fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        note['timestamp'] as String,
-                        style: const TextStyle(color: Colors.grey, fontSize: 12),
+                        note['summary'] as String,
+                        style: const TextStyle(color: Colors.white, fontSize: 14),
                       ),
                     ],
                   ),
@@ -71,3 +90,4 @@ class _NotesScreenState extends State<NotesScreen> {
     );
   }
 }
+
