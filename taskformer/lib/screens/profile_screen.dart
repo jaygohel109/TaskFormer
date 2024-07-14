@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskformer/screens/terms_of_service_screen.dart';
 import 'package:taskformer/widgets/custom_bottom_navigation_bar.dart';
 import 'package:taskformer/screens/home_screen.dart';
 import 'package:taskformer/screens/explore_screen.dart';
@@ -7,6 +8,7 @@ import 'package:taskformer/screens/login_screen.dart';
 import 'package:taskformer/Database/database_helper.dart';
 import 'package:taskformer/screens/edit_profile_screen.dart';
 import 'package:taskformer/screens/notebook_screen.dart';
+import 'package:taskformer/screens/privacy_policy_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -128,24 +130,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
               }
             ),
-            ProfileMenuItem(
-              icon: Icons.notifications,
-              text: 'Notifications',
-              onTap: () {},
-              trailing: Switch(
-                value: true,
-                onChanged: (value) {},
-                activeColor: Colors.yellow,
-              ),
-            ),
-            ProfileMenuItem(
-                icon: Icons.language, text: 'Languages', onTap: () {}),
+            // ProfileMenuItem(
+            //   icon: Icons.notifications,
+            //   text: 'Notifications',
+            //   onTap: () {},
+            //   trailing: Switch(
+            //     value: true,
+            //     onChanged: (value) {},
+            //     activeColor: Colors.yellow,
+            //   ),
+            // ),
+            // ProfileMenuItem(
+            //     icon: Icons.language, text: 'Languages', onTap: () {}),
             ProfileMenuItem(
                 icon: Icons.description,
                 text: 'Terms of service',
-                onTap: () {}),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TermsOfServiceScreen()),
+                  );
+                },
+            ),
             ProfileMenuItem(
-                icon: Icons.privacy_tip, text: 'Privacy Policy', onTap: () {}),
+                icon: Icons.privacy_tip, 
+                text: 'Privacy Policy', 
+                onTap: () {
+                   Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PrivacyPolicyScreen()),
+                  );
+                }),
             ProfileMenuItem(
                 icon: Icons.logout, text: 'Log out', onTap: _logout),
           ],

@@ -6,7 +6,7 @@ import 'package:taskformer/widgets/trending_card.dart';
 import 'package:taskformer/widgets/explore_card.dart';
 import 'package:taskformer/widgets/chat_card.dart';
 import 'package:taskformer/screens/profile_screen.dart';
-import 'package:taskformer/widgets/chatbot_popup.dart'; // Ensure ChatbotPopup is imported
+import 'package:taskformer/screens/chat_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -47,15 +47,14 @@ class HomePageState extends State<HomePage> {
     }
   }
 
-  void _showChatbotPopup() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => const ChatbotPopup(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, String>> persons = [
+      {'name': 'Leonardo da Vinci ', 'image': 'assets/images/leonardo.jpeg'},
+      {'name': ' Cleopatra VII ', 'image': 'assets/images/cleopatra-19.jpg'},
+      {'name': ' Napoleon Bonaparte', 'image': 'assets/images/napolean.jpeg'},
+    ];
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -75,14 +74,6 @@ class HomePageState extends State<HomePage> {
             IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.notifications),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.chat),
-              onPressed: _showChatbotPopup,
             ),
           ],
           bottom: const TabBar(
@@ -106,8 +97,7 @@ class HomePageState extends State<HomePage> {
                   children: [
                     const Text(
                       'Trending',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 10),
                     SizedBox(
@@ -130,8 +120,7 @@ class HomePageState extends State<HomePage> {
                     const SizedBox(height: 20),
                     const Text(
                       'Explore',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 10),
                     GridView.count(
@@ -146,8 +135,7 @@ class HomePageState extends State<HomePage> {
                             imageUrl: 'assets/images/time-period.jpeg'),
                         ExploreCard(
                             title: "Geographical Regions",
-                            imageUrl:
-                                'assets/images/geographical-event-image.png'),
+                            imageUrl: 'assets/images/geographical-event-image.png'),
                         ExploreCard(
                             title: "Events",
                             imageUrl: 'assets/images/image copy.png'),
@@ -159,30 +147,48 @@ class HomePageState extends State<HomePage> {
                     const SizedBox(height: 20),
                     const Text(
                       'Historical Chat',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 10),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ChatCard(
-                            name: "Leonardo da Vinci",
-                            imageUrl: 'assets/images/leonardo.jpeg'),
-                        ChatCard(
-                            name: "Cleopatra VII",
-                            imageUrl: 'assets/images/cleopatra-19.jpg'),
-                        ChatCard(
-                            name: "Napoleon Bonaparte",
-                            imageUrl: 'assets/images/napolean.jpeg'),
-                      ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          ...persons.map((person) {
+                            return ChatCard(
+                              name: person['name']!,
+                              imageUrl: person['image']!,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ChatScreen(
+                                      personName: person['name']!,
+                                      personImage: person['image']!,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
+                          IconButton(
+                            icon: const Icon(Icons.arrow_forward, color: Colors.yellow),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const ChatSelectionScreen()),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             Container(
-              child: const Center(child: Text('Explore Page Content jay')),
+              child: const Center(child: Text('Explore Page Content')),
             ),
             Container(
               child: const Center(child: Text('Historical Chat Page Content')),
