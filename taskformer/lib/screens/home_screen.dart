@@ -78,7 +78,8 @@ class HomePageState extends State<HomePage> {
         backgroundColor: Colors.black,
         actions: [
           IconButton(
-            icon: const Icon(Icons.chat),
+            iconSize: 35,
+            icon: const Icon(Icons.smart_toy),
             onPressed: _showChatbotPopup,
           ),
         ],
